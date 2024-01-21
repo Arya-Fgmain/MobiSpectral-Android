@@ -57,10 +57,8 @@ class ApplicationSelectorFragment: Fragment() {
 
                 val cameraIdNIR = Utils.getCameraIDs(requireContext(), MainActivity.MOBISPECTRAL_APPLICATION).second
 
-                if (cameraIdNIR != "OnePlus") {
-                    cameraFragment.generateAlertBox(requireContext(), "Only One Image Selected", "Cannot select 1 image, Select Two images.\nFirst image RGB, Second image NIR")
-                }
-                else {
+                if (cameraIdNIR == "OnePlus")
+                {
                     // If we have to select one image.
                     val nirUri: Uri? = result.data!!.data
                     CameraFragment.nirAbsolutePath = nirUri?.let { getRealPathFromURI(it) }.toString()
@@ -68,6 +66,7 @@ class ApplicationSelectorFragment: Fragment() {
                 }
             }
             else {
+
                 if (result.data?.clipData?.itemCount == 2) {
                     var rgbFile = getRealPathFromURI(result.data!!.clipData?.getItemAt(0)?.uri!!)
                     var nirFile = getRealPathFromURI(result.data!!.clipData?.getItemAt(1)?.uri!!)
@@ -112,6 +111,10 @@ class ApplicationSelectorFragment: Fragment() {
                         }
 
                     }
+                }
+                else if (result.data?.clipData?.itemCount == 1)
+                {
+                    cameraFragment.generateAlertBox(requireContext(), "Only One Image Selected", "Cannot select 1 image, Select Two images.\nFirst image RGB, Second image NIR")
                 }
                 else {
                     cameraFragment.generateAlertBox(requireContext(),"Number of images exceeded 2", "Cannot select more than 2 images.\nFirst image RGB, Second image NIR")
