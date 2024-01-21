@@ -36,6 +36,10 @@
         <action
             android:id="@+id/action_appselector_to_camera_fragment"
             app:destination="@id/camera_fragment" />
+        <action
+            android:id="@+id/action_appselector_to_jpeg_viewer"
+            app:launchSingleTop="true"
+            app:destination="@id/image_viewer_fragment" />
     </fragment>
 
     <fragment

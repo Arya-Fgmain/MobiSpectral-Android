@@ -1,28 +1,23 @@
 package com.shahzaib.mobispectral.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.*
-import android.database.Cursor
 import android.graphics.*
 import android.hardware.camera2.*
 import android.media.AudioManager
 import android.media.Image
 import android.media.ImageReader
 import android.media.ToneGenerator
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import android.view.*
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -34,10 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.shahzaib.mobispectral.MainActivity
 import com.shahzaib.mobispectral.R
 import com.shahzaib.mobispectral.Utils
-import com.shahzaib.mobispectral.compressImage
 import com.shahzaib.mobispectral.databinding.FragmentCameraBinding
-import com.shahzaib.mobispectral.readImage
-import com.shahzaib.mobispectral.saveImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -103,70 +95,6 @@ class CameraFragment: Fragment() {
     private var mobiSpectralApplicationID = 0
     private var offlineMode = false
 
-    private val myActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            if (result.data?.clipData == null) {
-                if (cameraIdNIR != "OnePlus") {
-                    generateAlertBox(requireContext(), "Only One Image Selected", "Cannot select 1 image, Select Two images.\nFirst image RGB, Second image NIR")
-                }
-                else {
-                    // If we have to select one image.
-                    val nirUri: Uri? = result.data!!.data
-                    nirAbsolutePath = nirUri?.let { getRealPathFromURI(it) }.toString()
-                    Log.i("Images Opened Path", "NIR Path: $nirAbsolutePath")
-                }
-            }
-            else {
-                if (result.data?.clipData?.itemCount == 2) {
-                    var rgbFile = getRealPathFromURI(result.data!!.clipData?.getItemAt(0)?.uri!!)
-                    var nirFile = getRealPathFromURI(result.data!!.clipData?.getItemAt(1)?.uri!!)
-
-                    if (rgbFile.contains("NIR")) {
-                        val tempFile = rgbFile
-                        rgbFile = nirFile
-                        nirFile = tempFile
-                    }
-
-                    var rgbBitmap = readImage(rgbFile)
-                    var nirBitmap = readImage(nirFile)
-
-                    MainActivity.originalImageRGB = rgbFile
-                    MainActivity.originalImageNIR = nirFile
-
-                    if (nirBitmap.width > rgbBitmap.width && nirBitmap.height > rgbBitmap.height) {
-                        val tempBitmap = rgbBitmap
-                        rgbBitmap = nirBitmap
-                        nirBitmap = tempBitmap
-                    }
-
-                    rgbBitmap = compressImage(rgbBitmap)
-                    nirBitmap = compressImage(nirBitmap)
-
-                    val rgbBitmapOutputFile = createFile("RGB")
-                    val nirBitmapOutputFile = File(rgbBitmapOutputFile.toString().replace("RGB", "NIR"))
-                    rgbAbsolutePath = rgbBitmapOutputFile.absolutePath
-                    nirAbsolutePath = nirBitmapOutputFile.absolutePath
-                    Log.i("Images Opened Path", "RGB Path: $rgbAbsolutePath, NIR Path: $nirAbsolutePath")
-
-                    lifecycleScope.launch {
-                        saveImage(rgbBitmap, rgbBitmapOutputFile)
-                        saveImage(nirBitmap, nirBitmapOutputFile)
-
-                        navController.navigate(
-                            CameraFragmentDirections.actionCameraToJpegViewer(rgbAbsolutePath, nirAbsolutePath)
-                        )
-                    }
-                }
-                else {
-                    generateAlertBox(requireContext(),"Number of images exceeded 2", "Cannot select more than 2 images.\nFirst image RGB, Second image NIR")
-                }
-            }
-        }
-        if (result.resultCode == Activity.RESULT_CANCELED) {
-            generateAlertBox(requireContext(), "No Images Selected", "Select Images again.\nFirst image RGB, Second image NIR")
-        }
-    }
-
     fun generateAlertBox(context: Context, title: String, text: String) {
         val alertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
         alertDialogBuilder.setMessage(text)
@@ -175,7 +103,7 @@ class CameraFragment: Fragment() {
         if (title == "Information")
             alertDialogBuilder.setPositiveButton("Okay") { dialog, _ -> dialog?.cancel() }
         else
-            alertDialogBuilder.setPositiveButton("Reload") { _, _ -> startMyActivityForResult() }
+            alertDialogBuilder.setPositiveButton("Reload") { _, _ -> ApplicationSelectorFragment().startMyActivityForResult() }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
@@ -223,7 +151,7 @@ class CameraFragment: Fragment() {
         }
 
         if (cameraIdNIR == "OnePlus" || offlineMode)
-            startMyActivityForResult()
+            ApplicationSelectorFragment().startMyActivityForResult()
 
         fragmentCameraBinding.viewFinder.holder.addCallback(cameraSurfaceHolderCallback)
 
@@ -335,24 +263,6 @@ class CameraFragment: Fragment() {
                 }
             }
         }
-    }
-
-    private fun startMyActivityForResult() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        lifecycleScope.launch(Dispatchers.Main) {
-            myActivityResultLauncher.launch(galleryIntent)
-        }
-    }
-
-    private fun getRealPathFromURI(contentUri: Uri): String {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = requireContext().contentResolver.query(contentUri, proj, null, null, null)!!
-        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        val absolutePath = cursor.getString(columnIndex)
-        cursor.close()
-        return absolutePath
     }
 
     /** Opens the camera and returns the opened device (as the result of the suspend coroutine) */
@@ -585,7 +495,7 @@ class CameraFragment: Fragment() {
          *
          * @return [File] created.
          */
-        private fun createFile(nir: String): File {
+        fun createFile(nir: String): File {
             val externalStorageDirectory = Environment.getExternalStorageDirectory().toString()
             val rootDirectory = File(externalStorageDirectory, "/MobiSpectral")
             val imageDirectory = File(rootDirectory, "/${Utils.rawImageDirectory}")
