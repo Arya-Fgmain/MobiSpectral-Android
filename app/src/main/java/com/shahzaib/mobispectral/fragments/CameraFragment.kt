@@ -1,6 +1,7 @@
 package com.shahzaib.mobispectral.fragments
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.*
 import android.graphics.*
 import android.hardware.camera2.*
@@ -95,19 +96,31 @@ class CameraFragment: Fragment() {
     private var mobiSpectralApplicationID = 0
     private var offlineMode = false
 
-    fun generateAlertBox(context: Context, title: String, text: String) {
-        val alertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
-        alertDialogBuilder.setMessage(text)
-        alertDialogBuilder.setTitle(title)
-        alertDialogBuilder.setCancelable(false)
-        if (title == "Information")
-            alertDialogBuilder.setPositiveButton("Okay") { dialog, _ -> dialog?.cancel() }
-        else
-            alertDialogBuilder.setPositiveButton("Reload") { _, _ -> ApplicationSelectorFragment().startMyActivityForResult() }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
+//    fun generateAlertBox(context: Context, title: String, text: String) {
+//
+//        val alertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+//        alertDialogBuilder.setMessage(text)
+//        alertDialogBuilder.setTitle(title)
+//        alertDialogBuilder.setCancelable(false)
+//        if (title == "Information")
+//            alertDialogBuilder.setPositiveButton("Okay") { dialog, _ -> dialog?.cancel() }
+//        else
+///*            alertDialogBuilder.setPositiveButton("Reload") { _, _ ->
+////                val appSelectorFragment = requireActivity().supportFragmentManager.findFragmentByTag("applicationSelectorFragment") as? ApplicationSelectorFragment
+//                ApplicationSelectorFragment().startMyActivityForResult()
+//             }*/
+//        {
+//            alertDialogBuilder.setPositiveButton("Reload") { _, _ ->
+//                val appSelectorFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.applicationselector_fragment) as? ApplicationSelectorFragment
+//                appSelectorFragment?.startMyActivityForResult()
+//            }
+//
+//        }
+//
+//
+//        val alertDialog = alertDialogBuilder.create()
+//        alertDialog.show()
+//    }
 
     private val cameraSurfaceHolderCallback = object: SurfaceHolder.Callback {
         override fun surfaceDestroyed(holder: SurfaceHolder) = Unit
@@ -147,7 +160,7 @@ class CameraFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentCameraBinding.information.setOnClickListener {
-            generateAlertBox(requireContext(),"Information", resources.getString(R.string.capture_information_string))
+            ApplicationSelectorFragment().generateAlertBox(requireContext(),"Information", resources.getString(R.string.capture_information_string))
         }
 
         if (cameraIdNIR == "OnePlus" || offlineMode)

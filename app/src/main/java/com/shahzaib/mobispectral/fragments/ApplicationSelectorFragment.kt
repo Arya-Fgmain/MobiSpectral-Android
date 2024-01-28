@@ -22,6 +22,7 @@ import androidx.lifecycle.withStarted
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.shahzaib.mobispectral.MainActivity
 import com.shahzaib.mobispectral.R
 import com.shahzaib.mobispectral.Utils
@@ -48,9 +49,26 @@ class ApplicationSelectorFragment: Fragment() {
         return absolutePath
     }
 
+    fun generateAlertBox(context: Context, title: String, text: String) {
+
+        val alertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
+        alertDialogBuilder.setMessage(text)
+        alertDialogBuilder.setTitle(title)
+        alertDialogBuilder.setCancelable(false)
+        if (title == "Information")
+            alertDialogBuilder.setPositiveButton("Okay") { dialog, _ -> dialog?.cancel() }
+        else
+            alertDialogBuilder.setPositiveButton("Reload") { _, _ ->
+                startMyActivityForResult()
+            }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
     private val myActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
-        val cameraFragment = CameraFragment()
+
 
         if (result.resultCode == Activity.RESULT_OK) {
             if (result.data?.clipData == null) {
@@ -114,15 +132,15 @@ class ApplicationSelectorFragment: Fragment() {
                 }
                 else if (result.data?.clipData?.itemCount == 1)
                 {
-                    cameraFragment.generateAlertBox(requireContext(), "Only One Image Selected", "Cannot select 1 image, Select Two images.\nFirst image RGB, Second image NIR")
+                    generateAlertBox(requireContext(), "Only One Image Selected", "Cannot select 1 image, Select Two images.\nFirst image RGB, Second image NIR")
                 }
                 else {
-                    cameraFragment.generateAlertBox(requireContext(),"Number of images exceeded 2", "Cannot select more than 2 images.\nFirst image RGB, Second image NIR")
+                    generateAlertBox(requireContext(),"Number of images exceeded 2", "Cannot select more than 2 images.\nFirst image RGB, Second image NIR")
                 }
             }
         }
         if (result.resultCode == Activity.RESULT_CANCELED) {
-            cameraFragment.generateAlertBox(requireContext(), "No Images Selected", "Select Images again.\nFirst image RGB, Second image NIR")
+            generateAlertBox(requireContext(), "No Images Selected", "Select Images again.\nFirst image RGB, Second image NIR")
         }
     }
 
@@ -183,7 +201,7 @@ class ApplicationSelectorFragment: Fragment() {
         val cameraIdNIR = Utils.getCameraIDs(requireContext(), MainActivity.MOBISPECTRAL_APPLICATION).second
 
         fragmentApplicationselectorBinding.information.setOnClickListener {
-            CameraFragment().generateAlertBox(requireContext(), "Information", getString(R.string.application_selector_information_string))
+            generateAlertBox(requireContext(), "Information", getString(R.string.application_selector_information_string))
         }
 
         fragmentApplicationselectorBinding.radioGroup.setOnCheckedChangeListener { _, _ ->
@@ -228,7 +246,7 @@ class ApplicationSelectorFragment: Fragment() {
             Log.i("Radio Button", "$selectedApplication, $selectedOption")
             editor.apply()
             if (selectedApplication == getString(R.string.olive_oil_string))
-                CameraFragment().generateAlertBox(requireContext(), "Information", getString(R.string.coming_soon_information_string))
+                generateAlertBox(requireContext(), "Information", getString(R.string.coming_soon_information_string))
             else
                 lifecycleScope.launch {
                     withStarted {

@@ -189,7 +189,7 @@ class ImageViewerFragment: Fragment() {
         }
 
         fragmentImageViewerBinding.information.setOnClickListener {
-            CameraFragment().generateAlertBox(requireContext(), "Information", getString(R.string.image_viewer_information_string))
+            ApplicationSelectorFragment().generateAlertBox(requireContext(), "Information", getString(R.string.image_viewer_information_string))
         }
 
         loadingDialogFragment.show(childFragmentManager, LoadingDialogFragment.TAG)

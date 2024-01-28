@@ -143,9 +143,9 @@ class ReconstructionFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fragmentReconstructionBinding.information.setOnClickListener {
             if (!advancedControlOption)
-                CameraFragment().generateAlertBox(requireContext(), "Information", resources.getString(R.string.reconstruction_analysis_information_simple_string))
+                ApplicationSelectorFragment().generateAlertBox(requireContext(), "Information", resources.getString(R.string.reconstruction_analysis_information_simple_string))
             else
-                CameraFragment().generateAlertBox(requireContext(),"Information", resources.getString(R.string.reconstruction_analysis_information_string))
+                ApplicationSelectorFragment().generateAlertBox(requireContext(),"Information", resources.getString(R.string.reconstruction_analysis_information_string))
         }
 
         fragmentReconstructionBinding.viewpager.apply {
