@@ -185,32 +185,47 @@
 
     <Button
         android:id="@+id/galleryButton"
-        android:layout_width="132dp"
-        android:layout_height="44dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/sfu_primary"
         android:text="@string/gallery_button"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:icon="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <Button
         android:id="@+id/filesButton"
-        android:layout_width="132dp"
-        android:layout_height="44dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/sfu_primary"
         android:text="@string/files_button"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:icon="@android:drawable/ic_dialog_email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="@id/galleryButton"
         app:layout_constraintTop_toTopOf="@id/galleryButton"
-        app:layout_constraintVertical_bias="0.103" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/cameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/sfu_primary"
+        android:text="@string/camera_button"
+        android:textSize="10sp"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="@id/galleryButton"
+        app:layout_constraintTop_toTopOf="@id/galleryButton"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

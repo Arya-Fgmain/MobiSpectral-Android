@@ -293,6 +293,18 @@ class ApplicationSelectorFragment: Fragment() {
             startFilesActivityForResult()
         }
 
+        fragmentApplicationselectorBinding.cameraButton.setOnClickListener{
+            lifecycleScope.launch {
+                withStarted {
+                    navController.safeNavigate(
+                        ApplicationSelectorFragmentDirections.actionAppselectorToCameraFragment(
+                            Utils.getCameraIDs(requireContext(), MainActivity.MOBISPECTRAL_APPLICATION).first, ImageFormat.JPEG
+                        )
+                    )
+                }
+            }
+        }
+
         fragmentApplicationselectorBinding.runApplicationButton.setOnTouchListener { _, _ ->
             val selectedApplication = applicationArray[fragmentApplicationselectorBinding.applicationPicker.value]
             val selectedRadio = fragmentApplicationselectorBinding.radioGroup.checkedRadioButtonId

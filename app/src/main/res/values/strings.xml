@@ -27,6 +27,7 @@
     <string name="classification_probabilities_string">Prob: %s</string>
     <string name="gallery_button">GALLERY</string>
     <string name="files_button">FILES</string>
+    <string name="camera_button">CAMERA</string>
 
     <string name="capture_description">Capture Image</string>
     <string name="tab_layout_description">Tab layout</string>
