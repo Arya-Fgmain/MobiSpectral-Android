@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.CATEGORY_OPENABLE
 import android.database.Cursor
 import android.graphics.ImageFormat
 import android.net.Uri
@@ -71,6 +72,7 @@ class ApplicationSelectorFragment: Fragment() {
 
 
         if (result.resultCode == Activity.RESULT_OK) {
+
             if (result.data?.clipData == null) {
 
                 val cameraIdNIR = Utils.getCameraIDs(requireContext(), MainActivity.MOBISPECTRAL_APPLICATION).second
@@ -144,11 +146,65 @@ class ApplicationSelectorFragment: Fragment() {
         }
     }
 
-    fun startMyActivityForResult() {
+    private fun startMyActivityForResult() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         lifecycleScope.launch(Dispatchers.Main) {
             myActivityResultLauncher.launch(galleryIntent)
+        }
+    }
+
+    private val filesActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result ->
+        if (result.resultCode == Activity.RESULT_OK)
+        {
+            // List to contain all selected Uris
+            val uriList: MutableList<Uri> = mutableListOf()
+
+            // ContentResolver for determining the type of data from the Uris
+            val resolver = context?.contentResolver
+
+            // Check if only one item is selected
+            result.data?.data?.let {
+                uriList.add(it)
+            }   // multiple items selected?
+                ?: result.data?.clipData?.let {
+                Log.i("FILES_BTN", "${it.itemCount} items have been selected")
+
+                for (index in 0 until it.itemCount)
+                {
+                    val uri = it.getItemAt(index).uri
+                    uriList.add(uri)
+                }
+            }
+
+            Log.i("FILES_BTN", "All selected files: $uriList")
+
+            val imageList: MutableList<Uri> = mutableListOf()
+            uriList.forEach{
+                // check if the file is of type image/jpeg, image/png, ...
+                if (resolver?.getType(it)?.subSequence(0,5)?.equals("image") == true)
+                    imageList.add(it)
+            }
+
+            Log.i("FILES_BTN", "Images: $imageList")
+
+        }
+
+        if (result.resultCode == Activity.RESULT_CANCELED)
+        {
+            generateAlertBox(requireContext(), "No Files Selected", "Please try again")
+        }
+    }
+
+    private fun startFilesActivityForResult() {
+        val filesIntent = Intent(Intent.ACTION_GET_CONTENT)
+        filesIntent.type = "*/*"
+        filesIntent.addCategory(CATEGORY_OPENABLE)
+        filesIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            filesActivityResultLauncher.launch(filesIntent)
         }
     }
 
@@ -231,6 +287,10 @@ class ApplicationSelectorFragment: Fragment() {
             editor.apply()
 
             startMyActivityForResult()
+        }
+
+        fragmentApplicationselectorBinding.filesButton.setOnClickListener{
+            startFilesActivityForResult()
         }
 
         fragmentApplicationselectorBinding.runApplicationButton.setOnTouchListener { _, _ ->

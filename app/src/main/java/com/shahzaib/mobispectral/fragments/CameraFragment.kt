@@ -96,32 +96,6 @@ class CameraFragment: Fragment() {
     private var mobiSpectralApplicationID = 0
     private var offlineMode = false
 
-//    fun generateAlertBox(context: Context, title: String, text: String) {
-//
-//        val alertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
-//        alertDialogBuilder.setMessage(text)
-//        alertDialogBuilder.setTitle(title)
-//        alertDialogBuilder.setCancelable(false)
-//        if (title == "Information")
-//            alertDialogBuilder.setPositiveButton("Okay") { dialog, _ -> dialog?.cancel() }
-//        else
-///*            alertDialogBuilder.setPositiveButton("Reload") { _, _ ->
-////                val appSelectorFragment = requireActivity().supportFragmentManager.findFragmentByTag("applicationSelectorFragment") as? ApplicationSelectorFragment
-//                ApplicationSelectorFragment().startMyActivityForResult()
-//             }*/
-//        {
-//            alertDialogBuilder.setPositiveButton("Reload") { _, _ ->
-//                val appSelectorFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.applicationselector_fragment) as? ApplicationSelectorFragment
-//                appSelectorFragment?.startMyActivityForResult()
-//            }
-//
-//        }
-//
-//
-//        val alertDialog = alertDialogBuilder.create()
-//        alertDialog.show()
-//    }
-
     private val cameraSurfaceHolderCallback = object: SurfaceHolder.Callback {
         override fun surfaceDestroyed(holder: SurfaceHolder) = Unit
 
@@ -163,8 +137,10 @@ class CameraFragment: Fragment() {
             ApplicationSelectorFragment().generateAlertBox(requireContext(),"Information", resources.getString(R.string.capture_information_string))
         }
 
-        if (cameraIdNIR == "OnePlus" || offlineMode)
-            ApplicationSelectorFragment().startMyActivityForResult()
+//        if (cameraIdNIR == "OnePlus" || offlineMode){
+//            Log.i("OFFLINE_MODE", "Starting here")
+//            ApplicationSelectorFragment().startMyActivityForResult()
+//        }
 
         fragmentCameraBinding.viewFinder.holder.addCallback(cameraSurfaceHolderCallback)
 
