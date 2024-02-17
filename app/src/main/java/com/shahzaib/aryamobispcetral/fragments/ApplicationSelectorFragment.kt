@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -24,14 +24,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.shahzaib.mobispectral.MainActivity
-import com.shahzaib.mobispectral.R
-import com.shahzaib.mobispectral.Utils
-import com.shahzaib.mobispectral.compressImage
-import com.shahzaib.mobispectral.databinding.FragmentApplicationselectorBinding
-import com.shahzaib.mobispectral.makeDirectory
-import com.shahzaib.mobispectral.readImage
-import com.shahzaib.mobispectral.saveImage
+import com.shahzaib.aryamobispcetral.MainActivity
+import com.shahzaib.aryamobispcetral.R
+import com.shahzaib.aryamobispcetral.Utils
+import com.shahzaib.aryamobispcetral.compressImage
+import com.shahzaib.aryamobispcetral.databinding.FragmentApplicationselectorBinding
+import com.shahzaib.aryamobispcetral.makeDirectory
+import com.shahzaib.aryamobispcetral.readImage
+import com.shahzaib.aryamobispcetral.saveImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File

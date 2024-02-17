@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.shahzaib.mobispectral.databinding.FragmentReconstructionDialogBinding
+import com.shahzaib.aryamobispcetral.databinding.FragmentReconstructionDialogBinding
 
 class LoadingDialogFragment: DialogFragment() {
     private lateinit var alertDialog: AlertDialog

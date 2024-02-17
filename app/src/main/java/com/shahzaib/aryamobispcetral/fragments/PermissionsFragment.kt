@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import android.Manifest
 import android.content.Context
@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withStarted
 import androidx.navigation.Navigation
-import com.shahzaib.mobispectral.BuildConfig
-import com.shahzaib.mobispectral.R
+import com.shahzaib.aryamobispcetral.BuildConfig
+import com.shahzaib.aryamobispcetral.R
 import kotlinx.coroutines.launch
 
 /**

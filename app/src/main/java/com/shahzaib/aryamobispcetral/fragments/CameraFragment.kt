@@ -1,7 +1,6 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.*
 import android.graphics.*
 import android.hardware.camera2.*
@@ -26,11 +25,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.android.camera.utils.getPreviewOutputSize
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.shahzaib.mobispectral.MainActivity
-import com.shahzaib.mobispectral.R
-import com.shahzaib.mobispectral.Utils
-import com.shahzaib.mobispectral.databinding.FragmentCameraBinding
+import com.shahzaib.aryamobispcetral.MainActivity
+import com.shahzaib.aryamobispcetral.R
+import com.shahzaib.aryamobispcetral.Utils
+import com.shahzaib.aryamobispcetral.databinding.FragmentCameraBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine

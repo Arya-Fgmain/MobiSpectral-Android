@@ -7,10 +7,10 @@ plugins {
 
 android {
     compileSdkVersion 33
-    namespace 'com.shahzaib.mobispectral'
+    namespace 'com.shahzaib.aryamobispcetral'
 
     defaultConfig {
-        applicationId "com.shahzaib.mobispectral"
+        applicationId "com.shahzaib.aryamobispcetral"
         minSdkVersion 23
         targetSdkVersion 33
         versionCode 1
@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation project(path: ':openCVLibrary343')
+    testImplementation 'junit:junit:4.12'
 
     // Navigation library
     def nav_version = '2.6.0'

@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral
+package com.shahzaib.aryamobispcetral
 
 import org.junit.Test
 

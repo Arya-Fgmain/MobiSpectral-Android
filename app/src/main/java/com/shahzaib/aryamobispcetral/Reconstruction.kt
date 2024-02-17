@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral
+package com.shahzaib.aryamobispcetral
 
 import android.content.Context
 import android.graphics.Bitmap

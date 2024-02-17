@@ -1,11 +1,10 @@
-package com.shahzaib.mobispectral
+package com.shahzaib.aryamobispcetral
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
-import android.graphics.Matrix
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraMetadata
@@ -18,12 +17,11 @@ import android.os.VibratorManager
 import android.util.Log
 import androidx.core.net.toUri
 import com.opencsv.CSVWriter
-import com.shahzaib.mobispectral.Utils.MobiSpectralPath
-import com.shahzaib.mobispectral.Utils.croppedImageDirectory
-import com.shahzaib.mobispectral.Utils.processedImageDirectory
-import com.shahzaib.mobispectral.Utils.rawImageDirectory
-import com.shahzaib.mobispectral.Utils.torchHeight
-import com.shahzaib.mobispectral.Utils.torchWidth
+import com.shahzaib.aryamobispcetral.Utils.MobiSpectralPath
+import com.shahzaib.aryamobispcetral.Utils.croppedImageDirectory
+import com.shahzaib.aryamobispcetral.Utils.processedImageDirectory
+import com.shahzaib.aryamobispcetral.Utils.rawImageDirectory
+import com.shahzaib.aryamobispcetral.Utils.torchWidth
 import org.opencv.android.Utils
 import org.opencv.core.*
 import org.opencv.imgproc.Imgproc

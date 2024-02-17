@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import ai.onnxruntime.OnnxMap
 import ai.onnxruntime.OnnxTensor
@@ -24,8 +24,8 @@ import com.example.android.camera.utils.GenericListAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import com.shahzaib.mobispectral.*
-import com.shahzaib.mobispectral.databinding.FragmentReconstructionBinding
+import com.shahzaib.aryamobispcetral.*
+import com.shahzaib.aryamobispcetral.databinding.FragmentReconstructionBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.nio.ByteBuffer

@@ -1,4 +1,4 @@
-package com.shahzaib.mobispectral.fragments
+package com.shahzaib.aryamobispcetral.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -22,9 +22,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.android.camera.utils.GenericListAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.shahzaib.mobispectral.*
-import com.shahzaib.mobispectral.Utils.cropImage
-import com.shahzaib.mobispectral.databinding.FragmentImageviewerBinding
+import com.shahzaib.aryamobispcetral.*
+import com.shahzaib.aryamobispcetral.Utils.cropImage
+import com.shahzaib.aryamobispcetral.databinding.FragmentImageviewerBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.opencv.android.OpenCVLoader

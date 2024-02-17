@@ -1,10 +1,10 @@
-package com.shahzaib.mobispectral
+package com.shahzaib.aryamobispcetral
 
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.shahzaib.mobispectral.databinding.ActivityMainBinding
+import com.shahzaib.aryamobispcetral.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding

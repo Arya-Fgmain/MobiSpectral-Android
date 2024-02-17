@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MobiSpectral</string>
+    <string name="app_name">Arya-MobiSpectral</string>
     <string name="formatted_illumination_string">%s Illumination</string>
 
     <string name="application_picker_string">Choose Fruit</string>

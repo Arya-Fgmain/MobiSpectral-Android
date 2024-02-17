@@ -5,6 +5,7 @@
 
     <!-- Permission declarations -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <!-- Storage Permission for Android 10 and above -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -26,7 +27,7 @@
         android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.shahzaib.mobispectral.MainActivity"
+            android:name="com.shahzaib.aryamobispcetral.MainActivity"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
